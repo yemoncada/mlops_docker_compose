@@ -1,11 +1,32 @@
-version: 'X'
+version: "3"
 
 services:
-  web:
-    build: .
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: penguin_db
+      MYSQL_ROOT_PASSWORD: 98Microne$
     ports:
-     - "5000:5000"
+      - "3306:3306"
+
+  api:
+    image: penguin-api:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://root:98Microne$@db:3307/penguin_db
     volumes:
-     - .:/code
-  redis:
-    image: redis
+      - ./weights:/app/weights
+    
+  inference:
+    image: inference-penguin-api:latest
+    ports:
+      - "8001:8001"
+    depends_on:
+      - api
+    volumes:
+      - ./weights:/app/weights

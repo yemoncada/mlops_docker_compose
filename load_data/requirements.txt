@@ -1,0 +1,9 @@
+PyMySQL==1.0.2
+pandas==1.5.3
+fastapi==0.95.0
+uvicorn==0.21.1
+SQLAlchemy-Utils==0.40.0
+SQLAlchemy==1.4.47
+seaborn==0.12.2
+mysql-connector-python==8.0.32
+scikit-learn==1.2.1
